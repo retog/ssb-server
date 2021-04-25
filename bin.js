@@ -48,7 +48,7 @@ if (argv[0] == 'start') {
     .use(require('ssb-no-auth'))
     .use(require('ssb-plugins'))
     .use(require('ssb-master'))
-    .use(require('ssb-gossip'))
+    .use(require('ssb-conn'))
     .use(require('ssb-replicate'))
     .use(require('ssb-friends'))
     .use(require('ssb-blobs'))
@@ -57,11 +57,14 @@ if (argv[0] == 'start') {
     .use(require('ssb-logging'))
     .use(require('ssb-query'))
     .use(require('ssb-links'))
+    .use(require('ssb-backlinks'))
     .use(require('ssb-ws'))
     .use(require('ssb-ebt'))
     .use(require('ssb-ooo'))
+    .use(require('ssb-patchboot-ws'))
   // add third-party plugins
 
+  config.connections.outgoing.ws = [{ "transform": "shs" }]
   require('ssb-plugins').loadUserPlugins(createSsbServer, config)
 
   // start server
